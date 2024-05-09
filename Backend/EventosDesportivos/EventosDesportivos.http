@@ -1,0 +1,6 @@
+@EventosDesportivos_HostAddress = http://localhost:8000
+
+GET {{EventosDesportivos_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
