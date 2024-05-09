@@ -1,6 +1,8 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 import jpIMG from "../../assets/logo.png";
+import { motion } from 'framer-motion';
 
 function Principal() {
     const [selected, setSelected] = useState(null);
@@ -48,6 +50,38 @@ function Principal() {
                 </Link>
             </div>
             <img className="logo-img" src={jpIMG} alt="logo" />
+
+            {/* Conteúdo do componente CarroMovimentoEsquerdaDireita incorporado aqui */}
+            <div style={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                <motion.div
+                    style={{ display: 'flex', alignItems: 'center' }} // Estilo do contêiner pai
+                >
+                    <motion.div
+                        initial={{ x: -500, rotate: 0 }} // Posição inicial à esquerda da tela e sem rotação
+                        animate={{ x: 500, rotate: 0 }} // Posição final à direita da tela e sem rotação
+                        transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }} // Duração da animação e repetição infinita
+                        style={{ width: 100, height: 100, marginRight: 10 }} // Estilo do contêiner da primeira imagem
+                    >
+                        <img src="/images/E.png" alt="Atletismo" style={{ width: '100%', height: '100%', transformOrigin: '50% 50%' }} />
+                    </motion.div>
+                    <motion.div
+                        initial={{ x: -500, rotate: 0 }}
+                        animate={{ x: 500, rotate: 0 }}
+                        transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
+                        style={{ width: 100, height: 100, marginRight: 10 }}
+                    >
+                        <img src="/images/E.png" alt="Atletismo" style={{ width: '100%', height: '100%', transformOrigin: '50% 50%' }} />
+                    </motion.div>
+                    <motion.div
+                        initial={{ x: -500, rotate: 0 }}
+                        animate={{ x: 500, rotate: 0 }}
+                        transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
+                        style={{ width: 100, height: 100, marginRight: 10 }}
+                    >
+                        <img src="/images/E.png" alt="Atletismo" style={{ width: '100%', height: '100%', transformOrigin: '50% 50%' }} />
+                    </motion.div>
+                </motion.div>
+            </div>
         </div>
     );
 }

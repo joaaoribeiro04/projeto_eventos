@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState } from "react";
 import jpIMG from "../../assets/logo.png";
+import React from 'react';
 
 function Visualizacao() {
     const [selected, setSelected] = useState(null);
@@ -52,4 +53,8 @@ function Visualizacao() {
     );
 }
 
+
 export default Visualizacao;
+
+
+
