@@ -23,21 +23,20 @@ function Principal() {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 1500,
         arrows: false,
         draggable: true
     };
 
     const imageStyle = {
-        width: '95%',
+        width: '100%',
         height: '600px',
         objectFit: 'cover',
         imageRendering: '-webkit-optimize-contrast',
         margin: '0 auto',
-        userSelect: 'none' // Desativa a seleção de texto na imagem
+        userSelect: 'none',
+        border: '20px solid #333'
     };
-    
-    
 
     return (
         <div className="container">
@@ -93,6 +92,12 @@ function Principal() {
                     </div>
                 </Slider>
             </div>
+            <footer className="footer">
+                <hr className="mt-5 mb-4" />
+                <p className="text-muted">
+                    Página que permite visualizar e inscrever em vários eventos desportivos.
+                </p>
+            </footer>
         </div>
     );
 }
