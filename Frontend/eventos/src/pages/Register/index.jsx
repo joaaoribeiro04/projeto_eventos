@@ -50,7 +50,7 @@ export const Register = () => {
                 </div>
 
                 <div className="container-login-form-btn">
-                <Link to="/register">
+                <Link to="/register" style={{ textDecoration: 'none' }}>
                     <button className="login-form-btn">Registar</button>
                     </Link>
                 </div>

@@ -37,7 +37,7 @@ export const Login = () => {
                 </div>
 
                 <div className="container-login-form-btn">
-                <Link to="/principal">
+                <Link to="/principal" style={{ textDecoration: 'none' }}>
                     <button className="login-form-btn">Login</button>
                     </Link>
                 </div>
