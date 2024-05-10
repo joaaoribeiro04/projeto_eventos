@@ -1,8 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from "react";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import jpIMG from "../../assets/logo.png";
-import { motion } from 'framer-motion';
+import imagem1 from "../../assets/imagem1.jpg";
+import imagem2 from "../../assets/imagem2.jpg";
+import imagem3 from "../../assets/imagem3.jpg";
 
 function Principal() {
     const [selected, setSelected] = useState(null);
@@ -11,76 +16,82 @@ function Principal() {
         setSelected(index);
     };
 
-    return (
-        <div className="container-header">
-            <div className="input-container">
-                <Link to="/principal">
-                    <button
-                        className={selected === 0 ? "selected-button" : ""}
-                        onClick={() => handleButtonClick(0)}
-                    >
-                        HomePage
-                    </button>
-                </Link>
-                <Link to="/eventos">
-                    <button
-                        className={selected === 1 ? "selected-button" : ""}
-                        onClick={() => handleButtonClick(1)}
-                    >
-                        Eventos
-                    </button>
-                </Link>
-                <Link to="/historico">
-                    <button
-                        className={selected === 2 ? "selected-button" : ""}
-                        onClick={() => handleButtonClick(2)}
-                    >
-                        Histórico
-                    </button>
-                </Link>
-            </div>
-            <div className="logout-container">
-                <Link to="/">
-                    <button
-                        className="logout-button"
-                        onClick={() => handleButtonClick(3)}
-                    >
-                        LogOut
-                    </button>
-                </Link>
-            </div>
-            <img className="logo-img" src={jpIMG} alt="logo" />
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 2000,
+        arrows: false,
+        draggable: true
+    };
 
-            {/* Conteúdo do componente CarroMovimentoEsquerdaDireita incorporado aqui */}
-            <div style={{ width: '100%', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                <motion.div
-                    style={{ display: 'flex', alignItems: 'center' }} // Estilo do contêiner pai
-                >
-                    <motion.div
-                        initial={{ x: -500, rotate: 0 }} // Posição inicial à esquerda da tela e sem rotação
-                        animate={{ x: 500, rotate: 0 }} // Posição final à direita da tela e sem rotação
-                        transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }} // Duração da animação e repetição infinita
-                        style={{ width: 100, height: 100, marginRight: 10 }} // Estilo do contêiner da primeira imagem
-                    >
-                        <img src="/images/E.png" alt="Atletismo" style={{ width: '100%', height: '100%', transformOrigin: '50% 50%' }} />
-                    </motion.div>
-                    <motion.div
-                        initial={{ x: -500, rotate: 0 }}
-                        animate={{ x: 500, rotate: 0 }}
-                        transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
-                        style={{ width: 100, height: 100, marginRight: 10 }}
-                    >
-                        <img src="/images/E.png" alt="Atletismo" style={{ width: '100%', height: '100%', transformOrigin: '50% 50%' }} />
-                    </motion.div>
-                    <motion.div
-                        initial={{ x: -500, rotate: 0 }}
-                        animate={{ x: 500, rotate: 0 }}
-                        transition={{ duration: 4, repeat: Infinity, repeatType: "reverse" }}
-                        style={{ width: 100, height: 100, marginRight: 10 }}
-                    >
-                        <img src="/images/E.png" alt="Atletismo" style={{ width: '100%', height: '100%', transformOrigin: '50% 50%' }} />
-                    </motion.div>
-                </motion.div>
+    const imageStyle = {
+        width: '95%',
+        height: '600px',
+        objectFit: 'cover',
+        imageRendering: '-webkit-optimize-contrast',
+        margin: '0 auto',
+        userSelect: 'none' // Desativa a seleção de texto na imagem
+    };
+    
+    
+
+    return (
+        <div className="container">
+            <div className="container-header">
+                <div className="input-container">
+                    <Link to="/principal">
+                        <button
+                            className={selected === 0 ? "selected-button" : ""}
+                            onClick={() => handleButtonClick(0)}
+                        >
+                            HomePage
+                        </button>
+                    </Link>
+                    <Link to="/eventos">
+                        <button
+                            className={selected === 1 ? "selected-button" : ""}
+                            onClick={() => handleButtonClick(1)}
+                        >
+                            Eventos
+                        </button>
+                    </Link>
+                    <Link to="/historico">
+                        <button
+                            className={selected === 2 ? "selected-button" : ""}
+                            onClick={() => handleButtonClick(2)}
+                        >
+                            Histórico
+                        </button>
+                    </Link>
+                </div>
+                <div className="logout-container">
+                    <Link to="/">
+                        <button
+                            className="logout-button"
+                            onClick={() => handleButtonClick(3)}
+                        >
+                            LogOut
+                        </button>
+                    </Link>
+                </div>
+                <img className="logo-img" src={jpIMG} alt="logo" />
+            </div>
+            <div className="carousel-container">
+                <Slider {...settings}>
+                    <div>
+                        <img src={imagem1} alt="Imagem 1" style={imageStyle} />
+                    </div>
+                    <div>
+                        <img src={imagem2} alt="Imagem 2" style={imageStyle} />
+                    </div>
+                    <div>
+                        <img src={imagem3} alt="Imagem 3" style={imageStyle} />
+                    </div>
+                </Slider>
             </div>
         </div>
     );
