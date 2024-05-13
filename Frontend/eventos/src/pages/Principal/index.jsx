@@ -82,10 +82,10 @@ function Principal() {
             <div className="carousel-container">
                 <Slider {...settings}>
                     <div>
-                        <img src={imagem1} alt="Imagem 1" style={imageStyle} />
+                        <img src={imagem2} alt="Imagem 2" style={imageStyle} />
                     </div>
                     <div>
-                        <img src={imagem2} alt="Imagem 2" style={imageStyle} />
+                        <img src={imagem1} alt="Imagem1 " style={imageStyle} />
                     </div>
                     <div>
                         <img src={imagem3} alt="Imagem 3" style={imageStyle} />
