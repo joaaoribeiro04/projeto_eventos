@@ -1,6 +1,6 @@
+using Microsoft.Extensions.Configuration;
 using eventos.Data;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace eventos
 {
@@ -13,24 +13,17 @@ namespace eventos
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            
             services.AddEndpointsApiExplorer();
-            
             services.AddSwaggerGen();
-            
             services.AddCors();
-
-            services.AddDbContext<UserContext>(opt => opt.UseMySQL(Configuration.GetConnectionString("Default")));
-
+            services.AddDbContext<UserContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("Default")));
             services.AddControllers();
-            
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserContext dbContext)
         {
             if (env.IsDevelopment())
             {
@@ -40,19 +33,18 @@ namespace eventos
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseCors(options => options
-                .WithOrigins(new[] {"http://localhost:3000", "http://localhost:8080", "http://localhost:4200"})
+                .WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080", "http://localhost:4200" })
                 .AllowAnyHeader()
                 .AllowAnyMethod()
-                .AllowCredentials()
-            );
-
+                .AllowCredentials());
             app.UseAuthorization();
-            
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            
+            // dbContext.Database.EnsureCreated();
+            // não usar em conjunto com migrações
+            Console.WriteLine("Database created and checked for seeding.");
         }
     }
 }
