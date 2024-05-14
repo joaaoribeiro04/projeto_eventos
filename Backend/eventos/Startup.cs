@@ -51,4 +51,4 @@ namespace eventos
             Console.WriteLine("Database created and checked for seeding.");
         }
     }
-}
+} //teste
