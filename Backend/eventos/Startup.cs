@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using eventos.Data;
+using eventos.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace eventos
@@ -21,6 +22,9 @@ namespace eventos
             services.AddDbContext<UserContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("Default")));
             services.AddControllers();
+
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<JwtService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserContext dbContext)

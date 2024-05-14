@@ -50,3 +50,8 @@ C:\Users\JPMR0\Desktop\projeto_eventos\Backend\eventos\obj\Debug\net6.0\ref\even
 C:\Users\JPMR0\Desktop\projeto_eventos\Backend\eventos\bin\Debug\net6.0\Humanizer.dll
 C:\Users\JPMR0\Desktop\projeto_eventos\Backend\eventos\obj\Debug\net6.0\eventos.sourcelink.json
 C:\Users\JPMR0\Desktop\projeto_eventos\Backend\eventos\obj\Debug\net6.0\eventos.csproj.Up2Date
+C:\Users\JPMR0\Desktop\projeto_eventos\Backend\eventos\bin\Debug\net6.0\BCrypt.Net-Next.dll
+C:\Users\JPMR0\Desktop\projeto_eventos\Backend\eventos\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\JPMR0\Desktop\projeto_eventos\Backend\eventos\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\JPMR0\Desktop\projeto_eventos\Backend\eventos\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\JPMR0\Desktop\projeto_eventos\Backend\eventos\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
