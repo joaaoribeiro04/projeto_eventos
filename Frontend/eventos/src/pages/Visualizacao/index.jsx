@@ -1,60 +1,100 @@
-import { Link } from 'react-router-dom';
-import { useState } from "react";
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import jpIMG from "../../assets/logo.png";
-import React from 'react';
+import axios from 'axios'; 
 
 function Visualizacao() {
-    const [selected, setSelected] = useState(null);
+    const { id } = useParams();
+    const [evento, setEvento] = useState(null);
 
-    const handleButtonClick = (index) => {
-        setSelected(index);
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/api/logout'); // Fazendo a solicitação POST usando Axios
+            if (response.status === 200) {
+                // Se o logout for bem-sucedido, redireciona para a página inicial ou faz qualquer outra coisa necessária
+                window.location.href = '/';
+            } else {
+                // Tratar erro de logout, se necessário
+                console.error('Erro ao fazer logout');
+            }
+        } catch (error) {
+            console.error('Erro de rede:', error);
+        }
+    };
+
+    useEffect(() => {
+        async function fetchEvento() {
+            try {
+                const response = await fetch(`http://localhost:8000/api/Eventos/${id}`);
+                if (!response.ok) {
+                    throw new Error('Falha ao carregar o evento');
+                }
+                const data = await response.json();
+                setEvento(data);
+            } catch (error) {
+                console.error('Erro ao buscar evento:', error);
+            }
+        }
+
+        fetchEvento();
+    }, [id]);
+
+    const handleInscricao = async () => {
+        try {
+            const response = await fetch(`http://localhost:8000/api/Eventos/${id}/Inscricao`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            if (response.ok) {
+                // Inscrição realizada com sucesso
+                console.log('Inscrição realizada com sucesso!');
+            } else {
+                console.error('Erro ao fazer inscrição:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Erro ao fazer inscrição:', error);
+        }
     };
 
     return (
         <div className="container-header">
             <div className="input-container">
                 <Link to="/principal">
-                    <button
-                        className={selected === 0 ? "selected-button" : ""}
-                        onClick={() => handleButtonClick(0)}
-                    >
-                        HomePage
-                    </button>
+                    <button>HomePage</button>
                 </Link>
                 <Link to="/eventos">
-                    <button
-                        className={selected === 1 ? "selected-button" : ""}
-                        onClick={() => handleButtonClick(1)}
-                    >
-                        Eventos
-                    </button>
+                    <button>Eventos</button>
                 </Link>
                 <Link to="/historico">
-                    <button
-                        className={selected === 2 ? "selected-button" : ""}
-                        onClick={() => handleButtonClick(2)}
-                    >
-                        Histórico
-                    </button>
+                    <button>Histórico</button>
                 </Link>
             </div>
             <div className="logout-container">
-                <Link to="/">
                     <button
                         className="logout-button"
-                        onClick={() => handleButtonClick(3)}
+                        onClick={handleLogout}
                     >
                         LogOut
                     </button>
-                </Link>
-            </div>
+                </div>
             <img className="logo-img" src={jpIMG} alt="logo" />
+            <div className="evento-container">
+                {evento && (
+                    <div className="evento-card">
+                        <img src={evento.imagem} alt="Imagem do Evento" />
+                        <h2>{evento.titulo}</h2>
+                        <p>Cidade: {evento.cidade}</p>
+                        <p>Data: {new Date(evento.data).toLocaleDateString()}</p>
+                        <p>Desporto: {evento.desporto}</p>
+                        <p>Descrição: {evento.descricao}</p>
+                        <button onClick={handleInscricao}>Inscrever-se</button>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
 
-
 export default Visualizacao;
-
-
-

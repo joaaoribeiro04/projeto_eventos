@@ -44,15 +44,6 @@ namespace eventos.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "admin@example.com",
-                            Name = "Admin",
-                            Password = "admin"
-                        });
                 });
 #pragma warning restore 612, 618
         }

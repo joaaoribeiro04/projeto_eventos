@@ -1,20 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { LayoutComponents } from "../../components/LayoutComponents"
-
+import axios from "axios";
+import { LayoutComponents } from "../../components/LayoutComponents";
 import jpIMG from "../../assets/logo.png";
-
 
 export const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [name, setName] = useState("")
+    const [name, setName] = useState("");
+    const navigate = useNavigate(); // Use o hook useNavigate
+
+    const handleRegister = async () => {
+        try {
+            const response = await axios.post("http://localhost:8000/api/register", {
+                name: name,
+                email: email,
+                password: password
+            });
+            console.log(response.data);
+            // Redireciona para a página de login após o registro bem-sucedido
+            navigate("/");
+        } catch (error) {
+            console.error("Erro ao registrar:", error);
+        }
+    };
 
     return (
         <LayoutComponents>
             <form className="login-form">
                 <span className="login-form-title"> Criar Conta </span>
-
                 <span className="login-form-title">
                     <img src={jpIMG} alt="logo" />
                 </span>
@@ -22,9 +36,10 @@ export const Register = () => {
                 <div className="wrap-input">
                     <input
                         className={name !== "" ? "has-val input" : "input"}
-                        type="email"
+                        type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        placeholder="Nome"
                     />
                     <span className="focus-input" data-placeholder="Nome"></span>
                 </div>
@@ -35,6 +50,7 @@ export const Register = () => {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Email"
                     />
                     <span className="focus-input" data-placeholder="Email"></span>
                 </div>
@@ -45,24 +61,20 @@ export const Register = () => {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
                     />
                     <span className="focus-input" data-placeholder="Password"></span>
                 </div>
 
                 <div className="container-login-form-btn">
-                <Link to="/register" style={{ textDecoration: 'none' }}>
-                    <button className="login-form-btn">Registar</button>
-                    </Link>
+                    <button className="login-form-btn" onClick={handleRegister}>Registar</button>
                 </div>
 
                 <div className="text-center">
                     <span className="txt1">Já possui conta? </span>
-                    <Link className="txt2" to="/">
-                        Login.
-                    </Link>
+                    <Link className="txt2" to="/">Login.</Link>
                 </div>
             </form>
         </LayoutComponents>
-    )
-}
-
+    );
+};

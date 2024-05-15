@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +19,9 @@ namespace eventos
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDistributedMemoryCache();
+            
+            services.AddHttpContextAccessor();
+
     
             services.AddSession(options =>
             {
@@ -32,6 +34,11 @@ namespace eventos
             services.AddCors();
             services.AddDbContext<UserContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("Default")));
+            
+            // Configuração do contexto EventContext
+            services.AddDbContext<EventContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("Default")));
+
             services.AddControllers();
 
             services.AddScoped<IUserRepository, UserRepository>();
@@ -49,7 +56,7 @@ namespace eventos
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors(options => options
-                .WithOrigins(new[] { "http://localhost:3000", "http://localhost:8080", "http://localhost:4200" })
+                .WithOrigins(new[] { "http://localhost:3000" })
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials());

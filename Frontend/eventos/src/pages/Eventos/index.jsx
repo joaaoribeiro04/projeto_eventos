@@ -1,53 +1,75 @@
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from "react";
 import jpIMG from "../../assets/logo.png";
+import axios from 'axios'; 
 
 function Eventos() {
-    const [selected, setSelected] = useState(null);
+    const [eventos, setEventos] = useState([]);
 
-    const handleButtonClick = (index) => {
-        setSelected(index);
+    useEffect(() => {
+        async function fetchEventos() {
+            try {
+                const response = await fetch('http://localhost:8000/api/Eventos');
+                const data = await response.json();
+                setEventos(data);
+            } catch (error) {
+                console.error('Erro ao buscar eventos:', error);
+            }
+        }
+
+        fetchEventos();
+    }, []);
+
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/api/logout'); // Fazendo a solicitação POST usando Axios
+            if (response.status === 200) {
+                // Se o logout for bem-sucedido, redireciona para a página inicial ou faz qualquer outra coisa necessária
+                window.location.href = '/';
+            } else {
+                // Tratar erro de logout, se necessário
+                console.error('Erro ao fazer logout');
+            }
+        } catch (error) {
+            console.error('Erro de rede:', error);
+        }
     };
 
     return (
         <div className="container-header">
             <div className="input-container">
                 <Link to="/principal">
-                    <button
-                        className={selected === 0 ? "selected-button" : ""}
-                        onClick={() => handleButtonClick(0)}
-                    >
-                        HomePage
-                    </button>
+                    <button>HomePage</button>
                 </Link>
                 <Link to="/eventos">
-                    <button
-                        className={selected === 1 ? "selected-button" : ""}
-                        onClick={() => handleButtonClick(1)}
-                    >
-                        Eventos
-                    </button>
+                    <button>Eventos</button>
                 </Link>
                 <Link to="/historico">
-                    <button
-                        className={selected === 2 ? "selected-button" : ""}
-                        onClick={() => handleButtonClick(2)}
-                    >
-                        Histórico
-                    </button>
+                    <button>Histórico</button>
                 </Link>
             </div>
             <div className="logout-container">
-                <Link to="/">
                     <button
                         className="logout-button"
-                        onClick={() => handleButtonClick(3)}
+                        onClick={handleLogout}
                     >
                         LogOut
                     </button>
-                </Link>
-            </div>
+                </div>
             <img className="logo-img" src={jpIMG} alt="logo" />
+            <div className="eventos-container">
+                {eventos.map(evento => (
+                    <Link key={evento.id} to={`/visualizacao/${evento.id}`}>
+                        <div className="evento-card">
+                            <img src={evento.imagem} alt="Imagem do Evento" />
+                            <h2>{evento.titulo}</h2>
+                            <p>Cidade: {evento.cidade}</p>
+                            <p>Data: {new Date(evento.data).toLocaleDateString()}</p>
+                            <p>Desporto: {evento.desporto}</p>
+                        </div>
+                    </Link>
+                ))}
+            </div>
         </div>
     );
 }

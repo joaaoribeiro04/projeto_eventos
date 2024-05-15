@@ -4,6 +4,7 @@ import { useState } from "react";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import axios from 'axios'; // Importando Axios
 import jpIMG from "../../assets/logo.png";
 import imagem1 from "../../assets/imagem1.jpg";
 import imagem2 from "../../assets/imagem2.jpg";
@@ -14,6 +15,21 @@ function Principal() {
 
     const handleButtonClick = (index) => {
         setSelected(index);
+    };
+
+    const handleLogout = async () => {
+        try {
+            const response = await axios.post('http://localhost:8000/api/logout'); // Fazendo a solicitação POST usando Axios
+            if (response.status === 200) {
+                // Se o logout for bem-sucedido, redireciona para a página inicial ou faz qualquer outra coisa necessária
+                window.location.href = '/';
+            } else {
+                // Tratar erro de logout, se necessário
+                console.error('Erro ao fazer logout');
+            }
+        } catch (error) {
+            console.error('Erro de rede:', error);
+        }
     };
 
     const settings = {
@@ -68,14 +84,12 @@ function Principal() {
                     </Link>
                 </div>
                 <div className="logout-container">
-                    <Link to="/">
-                        <button
-                            className="logout-button"
-                            onClick={() => handleButtonClick(3)}
-                        >
-                            LogOut
-                        </button>
-                    </Link>
+                    <button
+                        className="logout-button"
+                        onClick={handleLogout}
+                    >
+                        LogOut
+                    </button>
                 </div>
                 <img className="logo-img" src={jpIMG} alt="logo" />
             </div>
