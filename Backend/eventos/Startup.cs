@@ -19,21 +19,20 @@ namespace eventos
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDistributedMemoryCache();
+    
+            services.AddSession(options =>
+            {
+                options.Cookie.IsEssential = true; // torna o cookie da sessão essencial
+            });
+    
+            // Outros serviços
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddCors();
             services.AddDbContext<UserContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("Default")));
             services.AddControllers();
-
-            // Configura o serviço de memória distribuída
-            services.AddDistributedMemoryCache();
-
-            // Adiciona o serviço de sessão
-            services.AddSession(options =>
-            {
-                options.Cookie.IsEssential = true; // torna o cookie da sessão essencial
-            });
 
             services.AddScoped<IUserRepository, UserRepository>();
         }
