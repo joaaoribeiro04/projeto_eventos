@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "NjVC8Hj8LGHWLUMaDv3B+orAkqXogNHqt/VUb9syqtN6aLluSzVXh6h7fNDioOk/cDgU8gGyQuNF/hv7trzzig==",
+  "dgSpecHash": "OP9HgbSqwFqgR7BGY8V+lDy7SCrL/F9lAC65g+JW8lr0KetNih7vdEPPvxzHHpxaQUFs0+6tPqIwOjvDUCIF1w==",
   "success": true,
   "projectFilePath": "C:\\Users\\JPMR0\\Desktop\\projeto_eventos\\Backend\\eventos\\eventos.csproj",
   "expectedPackageFiles": [
@@ -19,7 +19,7 @@
     "C:\\Users\\JPMR0\\.nuget\\packages\\microsoft.aspnetcore.hosting.abstractions\\2.2.0\\microsoft.aspnetcore.hosting.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\JPMR0\\.nuget\\packages\\microsoft.aspnetcore.hosting.server.abstractions\\2.2.0\\microsoft.aspnetcore.hosting.server.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\JPMR0\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
-    "C:\\Users\\JPMR0\\.nuget\\packages\\microsoft.aspnetcore.http\\2.2.0\\microsoft.aspnetcore.http.2.2.0.nupkg.sha512",
+    "C:\\Users\\JPMR0\\.nuget\\packages\\microsoft.aspnetcore.http\\2.2.2\\microsoft.aspnetcore.http.2.2.2.nupkg.sha512",
     "C:\\Users\\JPMR0\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\JPMR0\\.nuget\\packages\\microsoft.aspnetcore.http.extensions\\2.2.0\\microsoft.aspnetcore.http.extensions.2.2.0.nupkg.sha512",
     "C:\\Users\\JPMR0\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",

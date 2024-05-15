@@ -1,7 +1,10 @@
-using Microsoft.Extensions.Configuration;
-using eventos.Data;
-using eventos.Helpers;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using eventos.Data;
 
 namespace eventos
 {
@@ -23,8 +26,16 @@ namespace eventos
                 options.UseNpgsql(Configuration.GetConnectionString("Default")));
             services.AddControllers();
 
+            // Configura o serviço de memória distribuída
+            services.AddDistributedMemoryCache();
+
+            // Adiciona o serviço de sessão
+            services.AddSession(options =>
+            {
+                options.Cookie.IsEssential = true; // torna o cookie da sessão essencial
+            });
+
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<JwtService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserContext dbContext)
@@ -43,6 +54,10 @@ namespace eventos
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials());
+
+            // Adiciona o uso do middleware de sessão
+            app.UseSession();
+
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             
@@ -51,4 +66,4 @@ namespace eventos
             Console.WriteLine("Database created and checked for seeding.");
         }
     }
-} //teste
+}

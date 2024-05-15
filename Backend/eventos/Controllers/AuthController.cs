@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using eventos.Data;
 using System.Threading.Tasks;
 using eventos.Dtos;
-using eventos.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Eventos.Models;
 
@@ -13,13 +12,12 @@ namespace eventos.Controllers;
 public class UserController : Controller
 {
     private readonly IUserRepository _repository;
-    private readonly JwtService _jwtService;
 
-    public UserController(IUserRepository repository, JwtService jwtService)
+    public UserController(IUserRepository repository)
     {
         _repository = repository;
-        _jwtService = jwtService;
     }
+    
     [HttpPost("register")]
     public IActionResult Register(RegisterDto dto)
     {
@@ -45,48 +43,17 @@ public class UserController : Controller
             return BadRequest(new {message = "Credênciais inválidas"});
         }
 
-        var jwt = _jwtService.Generate(user.Id);
-        
-        Response.Cookies.Append("jwt", jwt, new CookieOptions
-        {
-            HttpOnly = true
-        });
-        
-        return Ok(new
-        {
-            message = "Sucesso!"
-        });
+        return Ok(user); 
     }
-
-    [HttpGet("user")]
-    public IActionResult User()
-    {
-        try
-        {
-            var jwt = Request.Cookies["jwt"];
-
-            var token = _jwtService.Verify(jwt);
-
-            int userId = int.Parse(token.Issuer);
-
-            var user = _repository.GetById(userId);
-
-            return Ok(user);
-        }
-        catch (Exception _)
-        {
-            return Unauthorized();
-        }
-    }
-
+    
     [HttpPost("logout")]
     public IActionResult Logout()
     {
-        Response.Cookies.Delete("jwt");
+        HttpContext.Session.Clear();
 
-        return Ok(new
-        {
-            message = "Sucesso!"
-        });
+        return Ok(new { message = "Logout bem-sucedido." });
     }
+
+
+    
 }
