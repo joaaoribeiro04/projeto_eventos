@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import jpIMG from "../../assets/logo.png";
 import axios from 'axios'; 
+import "../../components/eventos.css";
 
 function Eventos() {
     const [eventos, setEventos] = useState([]);
@@ -75,3 +76,4 @@ function Eventos() {
 }
 
 export default Eventos;
+
