@@ -1,0 +1,58 @@
+.container-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-container {
+    margin-top: 20px;
+}
+
+.logout-container {
+    margin-bottom: 20px;
+}
+
+.logo-img {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.evento-container {
+    display: flex;
+    align-items: flex-start; /* Alinha os itens à esquerda */
+}
+
+.evento-card {
+    display: flex; /* Adiciona flexbox para alinhar conteúdo horizontalmente */
+    margin-left: 20px; /* Adiciona um espaço à esquerda para separar a imagem */
+}
+
+.evento-card img {
+    max-width: 300px; /* Limita a largura da imagem */
+    border-radius: 5px;
+    margin-right: 20px; /* Adiciona um espaço à direita da imagem */
+    border: none; /* Remove a borda ao redor da imagem */
+}
+
+.inscricao-button {
+    margin-top: 20px;
+    margin-right: auto; /* Define a margem direita como "auto" para centralizar horizontalmente */
+    margin-left: auto; /* Define a margem esquerda como "auto" para centralizar horizontalmente */
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    width: 150px;
+    height: 40px;
+    background: #6a7dfe;
+    background: -webkit-linear-gradient(to left, #21d4fd, #b721ff);
+    background: -o-linear-gradient(to left, #21d4fd, #b721ff);
+    background: -moz-linear-gradient(to left, #21d4fd, #b721ff);
+    background: linear-gradient(to left, #21d4fd, #b721ff);
+}
+

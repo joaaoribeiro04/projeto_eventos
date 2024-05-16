@@ -50,17 +50,17 @@ function Eventos() {
                 </Link>
             </div>
             <div className="logout-container">
-                    <button
-                        className="logout-button"
-                        onClick={handleLogout}
-                    >
-                        LogOut
-                    </button>
-                </div>
+                <button
+                    className="logout-button"
+                    onClick={handleLogout}
+                >
+                    LogOut
+                </button>
+            </div>
             <img className="logo-img" src={jpIMG} alt="logo" />
             <div className="eventos-container">
                 {eventos.map(evento => (
-                    <Link key={evento.id} to={`/visualizacao/${evento.id}`}>
+                    <Link key={evento.id} to={`/visualizacao/${evento.id}`} className="evento-link">
                         <div className="evento-card">
                             <img src={evento.imagem} alt="Imagem do Evento" />
                             <h2>{evento.titulo}</h2>
@@ -76,4 +76,3 @@ function Eventos() {
 }
 
 export default Eventos;
-

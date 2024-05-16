@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import jpIMG from "../../assets/logo.png";
-import axios from 'axios'; 
+import axios from 'axios';
+import "../../components/visualizacao.css";
 
 function Visualizacao() {
     const { id } = useParams();
@@ -9,12 +10,10 @@ function Visualizacao() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/api/logout'); // Fazendo a solicitação POST usando Axios
+            const response = await axios.post('http://localhost:8000/api/logout');
             if (response.status === 200) {
-                // Se o logout for bem-sucedido, redireciona para a página inicial ou faz qualquer outra coisa necessária
                 window.location.href = '/';
             } else {
-                // Tratar erro de logout, se necessário
                 console.error('Erro ao fazer logout');
             }
         } catch (error) {
@@ -48,7 +47,6 @@ function Visualizacao() {
                 }
             });
             if (response.ok) {
-                // Inscrição realizada com sucesso
                 console.log('Inscrição realizada com sucesso!');
             } else {
                 console.error('Erro ao fazer inscrição:', response.statusText);
@@ -72,24 +70,26 @@ function Visualizacao() {
                 </Link>
             </div>
             <div className="logout-container">
-                    <button
-                        className="logout-button"
-                        onClick={handleLogout}
-                    >
-                        LogOut
-                    </button>
-                </div>
+                <button
+                    className="logout-button"
+                    onClick={handleLogout}
+                >
+                    LogOut
+                </button>
+            </div>
             <img className="logo-img" src={jpIMG} alt="logo" />
             <div className="evento-container">
                 {evento && (
                     <div className="evento-card">
                         <img src={evento.imagem} alt="Imagem do Evento" />
-                        <h2>{evento.titulo}</h2>
-                        <p>Cidade: {evento.cidade}</p>
-                        <p>Data: {new Date(evento.data).toLocaleDateString()}</p>
-                        <p>Desporto: {evento.desporto}</p>
-                        <p>Descrição: {evento.descricao}</p>
-                        <button onClick={handleInscricao}>Inscrever-se</button>
+                        <div className="evento-info">
+                            <h2>{evento.titulo}</h2>
+                            <p>Cidade: {evento.cidade}</p>
+                            <p>Data: {new Date(evento.data).toLocaleDateString()}</p>
+                            <p>Desporto: {evento.desporto}</p>
+                            <p>Descrição: {evento.descricao}</p>
+                        </div>
+                        <button className="inscricao-button" onClick={handleInscricao}>Inscrever</button>
                     </div>
                 )}
             </div>
