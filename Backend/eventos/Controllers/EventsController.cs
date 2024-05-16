@@ -40,10 +40,12 @@ namespace eventos.Controllers
             return evento;
         }
 
-        // POST: api/Eventos
         [HttpPost] // Cria um novo evento
         public async Task<ActionResult<Evento>> PostEvento(Evento evento)
         {
+            // Ajuste a propriedade 'Data' para ter o fuso horário UTC
+            evento.Data = evento.Data.ToUniversalTime();
+
             _context.Eventos.Add(evento);
             await _context.SaveChangesAsync();
 
