@@ -10,7 +10,9 @@ export const Register = () => {
     const [name, setName] = useState("");
     const navigate = useNavigate(); // Use o hook useNavigate
 
-    const handleRegister = async () => {
+    const handleRegister = async (event) => {
+        event.preventDefault(); // Impede o comportamento padrão do formulário
+
         try {
             const response = await axios.post("http://localhost:8000/api/register", {
                 name: name,
@@ -18,16 +20,16 @@ export const Register = () => {
                 password: password
             });
             console.log(response.data);
-            // Redireciona para a página de login após o registro bem-sucedido
+            // Redireciona para a página de login após o registo bem-sucedido
             navigate("/");
         } catch (error) {
-            console.error("Erro ao registrar:", error);
+            console.error("Erro ao registar:", error);
         }
     };
 
     return (
         <LayoutComponents>
-            <form className="login-form">
+            <form className="login-form" onSubmit={handleRegister}>
                 <span className="login-form-title"> Criar Conta </span>
                 <span className="login-form-title">
                     <img src={jpIMG} alt="logo" />
@@ -67,7 +69,7 @@ export const Register = () => {
                 </div>
 
                 <div className="container-login-form-btn">
-                    <button className="login-form-btn" onClick={handleRegister}>Registar</button>
+                    <button type="submit" className="login-form-btn">Registar</button>
                 </div>
 
                 <div className="text-center">

@@ -7,17 +7,22 @@ import jpIMG from "../../assets/logo.png";
 export const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate(); // Use o hook useNavigate
+    const navigate = useNavigate(); 
+    console.log("String");
 
-    const handleLogin = async () => {
+    const handleLogin = async (event) => {
+        event.preventDefault(); // Impede o comportamento padrão do formulário
+
         try {
+            axios.defaults.withCredentials = true;
             const response = await axios.post("http://localhost:8000/api/login", {
                 email: email,
                 password: password
             });
             console.log(response.data);
             // Redireciona para a página principal após o login bem-sucedido
-            navigate("/principal");
+            navigate("/", {replace : true});
+
         } catch (error) {
             console.error("Erro ao fazer login:", error);
         }
@@ -25,7 +30,7 @@ export const Login = () => {
 
     return (
         <LayoutComponents>
-            <form className="login-form">
+            <form className="login-form" onSubmit={handleLogin}>
                 <span className="login-form-title"> Bem vindo </span>
                 <span className="login-form-title">
                     <img src={jpIMG} alt="logo" />
@@ -54,7 +59,7 @@ export const Login = () => {
                 </div>
 
                 <div className="container-login-form-btn">
-                    <button className="login-form-btn" onClick={handleLogin}>Login</button>
+                    <button type="submit" className="login-form-btn">Login</button>
                 </div>
 
                 <div className="text-center">

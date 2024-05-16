@@ -24,12 +24,8 @@ function Visualizacao() {
     useEffect(() => {
         async function fetchEvento() {
             try {
-                const response = await fetch(`http://localhost:8000/api/Eventos/${id}`);
-                if (!response.ok) {
-                    throw new Error('Falha ao carregar o evento');
-                }
-                const data = await response.json();
-                setEvento(data);
+                const response = await axios.get(`http://localhost:8000/api/Eventos/${id}`);
+                setEvento(response.data);
             } catch (error) {
                 console.error('Erro ao buscar evento:', error);
             }
@@ -40,17 +36,8 @@ function Visualizacao() {
 
     const handleInscricao = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/api/Eventos/${id}/Inscricao`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            if (response.ok) {
-                console.log('Inscrição realizada com sucesso!');
-            } else {
-                console.error('Erro ao fazer inscrição:', response.statusText);
-            }
+            const response = await axios.post(`http://localhost:8000/api/Eventos/${id}/Inscricao`);
+            console.log('Inscrição realizada com sucesso!');
         } catch (error) {
             console.error('Erro ao fazer inscrição:', error);
         }
