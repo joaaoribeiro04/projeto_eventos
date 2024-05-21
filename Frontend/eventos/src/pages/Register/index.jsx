@@ -21,7 +21,7 @@ export const Register = () => {
             });
             console.log(response.data);
             // Redireciona para a página de login após o registo bem-sucedido
-            navigate("/");
+            navigate("/login");
         } catch (error) {
             console.error("Erro ao registar:", error);
         }
@@ -74,7 +74,7 @@ export const Register = () => {
 
                 <div className="text-center">
                     <span className="txt1">Já possui conta? </span>
-                    <Link className="txt2" to="/">Login.</Link>
+                    <Link className="txt2" to="/login">Login.</Link>
                 </div>
             </form>
         </LayoutComponents>

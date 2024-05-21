@@ -22,7 +22,7 @@ function Principal() {
             const response = await axios.post('http://localhost:8000/api/logout'); // Fazendo a solicitação POST usando Axios
             if (response.status === 200) {
                 // Se o logout for bem-sucedido, redireciona para a página inicial ou faz qualquer outra coisa necessária
-                window.location.href = '/';
+                window.location.href = '/login';
             } else {
                 // Tratar erro de logout, se necessário
                 console.error('Erro ao fazer logout');
@@ -58,7 +58,7 @@ function Principal() {
         <div className="container">
             <div className="container-header">
                 <div className="input-container">
-                    <Link to="/principal">
+                    <Link to="/">
                         <button
                             className={selected === 0 ? "selected-button" : ""}
                             onClick={() => handleButtonClick(0)}
