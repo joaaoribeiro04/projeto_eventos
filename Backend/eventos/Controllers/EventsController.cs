@@ -8,17 +8,47 @@ using System.Threading.Tasks;
 
 namespace eventos.Controllers
 {
-    [Route("api/Eventos")] // Especifica a rota base para todas as ações neste controlador
+    [Route("api/Eventos")] 
     [ApiController]
     public class EventosController : ControllerBase
     {
         private readonly EventContext _context;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public EventosController(EventContext context)
+        public EventosController(EventContext context, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
 
+        // POST: api/Eventos/UploadImagem
+        [HttpPost("UploadImagem")]
+        public async Task<IActionResult> UploadImagem([FromForm] IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+                return BadRequest("Nenhum arquivo enviado.");
+
+            try
+            {
+                var uploadsFolder = Path.Combine("", "media");
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+
+                var uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+                var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+
+                return Ok(new { filePath });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno do servidor: {ex.Message}");
+            }
+        }
         // GET: api/Eventos
         [HttpGet] // Retorna todos os eventos na base de dados
         public async Task<ActionResult<IEnumerable<Evento>>> GetEventos()

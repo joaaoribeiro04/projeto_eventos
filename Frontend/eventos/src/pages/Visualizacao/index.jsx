@@ -12,7 +12,7 @@ function Visualizacao() {
         try {
             const response = await axios.post('http://localhost:8000/api/logout');
             if (response.status === 200) {
-                window.location.href = '/';
+                window.location.href = '/login';
             } else {
                 console.error('Erro ao fazer logout');
             }
@@ -27,7 +27,7 @@ function Visualizacao() {
                 const response = await axios.get(`http://localhost:8000/api/Eventos/${id}`);
                 setEvento(response.data);
             } catch (error) {
-                console.error('Erro ao buscar evento:', error);
+                console.error('Erro ao procurar evento:', error);
             }
         }
 
@@ -46,7 +46,7 @@ function Visualizacao() {
     return (
         <div className="container-header">
             <div className="input-container">
-                <Link to="/principal">
+                <Link to="/">
                     <button>HomePage</button>
                 </Link>
                 <Link to="/eventos">
@@ -68,7 +68,7 @@ function Visualizacao() {
             <div className="evento-container">
                 {evento && (
                     <div className="evento-card">
-                        <img src={evento.imagem} alt="Imagem do Evento" />
+                        <img src={`http://localhost:8000/${evento.imagem}`} alt="Imagem do Evento" />
                         <div className="evento-info">
                             <h2>{evento.titulo}</h2>
                             <p>Cidade: {evento.cidade}</p>

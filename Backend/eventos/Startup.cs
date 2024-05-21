@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using eventos.Data;
 using System;
+using Microsoft.Extensions.FileProviders;
 
 namespace eventos
 {
@@ -58,6 +59,13 @@ namespace eventos
                 app.UseSwaggerUI();
                 app.UseDeveloperExceptionPage();
             }
+            
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine("C:\\Users\\JPMR0\\Desktop\\projeto_eventos\\Backend\\eventos\\Media", "")),
+                RequestPath = "/media" // Define o caminho virtual para os arquivos estáticos
+            });
 
             app.UseHttpsRedirection();
             app.UseRouting();

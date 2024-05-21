@@ -26,7 +26,7 @@ function Eventos() {
             const response = await axios.post('http://localhost:8000/api/logout'); // Fazendo a solicitação POST usando Axios
             if (response.status === 200) {
                 // Se o logout for bem-sucedido, redireciona para a página inicial ou faz qualquer outra coisa necessária
-               // window.location.href = '/login';
+               window.location.href = '/login';
             } else {
                 // Tratar erro de logout, se necessário
                 console.error('Erro ao fazer logout');
@@ -39,7 +39,7 @@ function Eventos() {
     return (
         <div className="container-header">
             <div className="input-container">
-                <Link to="/principal">
+                <Link to="/">
                     <button>HomePage</button>
                 </Link>
                 <Link to="/eventos">
@@ -62,7 +62,7 @@ function Eventos() {
                 {eventos.map(evento => (
                     <Link key={evento.id} to={`/visualizacao/${evento.id}`} className="evento-link">
                         <div className="evento-card">
-                            <img src={evento.imagem} alt="Imagem do Evento" />
+                            <img src={`http://localhost:8000/${evento.imagem}`} alt="Imagem do Evento" />
                             <h2>{evento.titulo}</h2>
                             <p>Cidade: {evento.cidade}</p>
                             <p>Data: {new Date(evento.data).toLocaleDateString()}</p>
