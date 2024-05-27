@@ -30,7 +30,7 @@
 }
 
 .evento-card img {
-  width: 100%;
+  width: 290px;
   height: 200px; /* Define uma altura fixa para as imagens */
   object-fit: cover; /* Ajusta a imagem dentro da área definida */
   border-radius: 5px;
@@ -45,6 +45,12 @@
 
 .evento-card a:hover {
   text-decoration: none !important;
+}
+
+.evento-card h2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .inscricao-button {
@@ -75,4 +81,20 @@
 
 .evento-link:hover {
   text-decoration: none !important;
+}
+
+.filtro-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.filtro-container select {
+  padding: 8px 16px;
+  margin: 0 10px;
+  border-radius: 5px;
+  background-color: #333;
+  font-size: 16px;
+  color: #fff; 
+  outline: none;
 }

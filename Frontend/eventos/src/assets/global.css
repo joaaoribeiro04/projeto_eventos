@@ -276,3 +276,13 @@ button {
   text-align: center;
   font-size: 10px; 
 }
+
+.error-message-wrapper {
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
