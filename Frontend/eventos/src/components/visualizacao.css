@@ -1,43 +1,31 @@
-.container-header {
+.visualizacao-container-header {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.input-container {
+    justify-content: center;
+    padding: 2px;
+    width: 100vw;
     margin-top: 20px;
 }
 
-.logout-container {
-    margin-bottom: 20px;
-}
-
-.logo-img {
-    width: 150px;
-    margin-bottom: 20px;
-}
-
-.evento-container {
+.visualizacao-input-container {
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
     display: flex;
-    align-items: flex-start; /* Alinha os itens à esquerda */
+    width: 650px;
+    height: 50px;
+    padding-right: 12px;
+    padding-left: 12px;
+    border-radius: 20px;
+    gap: 40px;
+    background-color: #333;
 }
 
-.evento-card {
-    display: flex; /* Adiciona flexbox para alinhar conteúdo horizontalmente */
-    margin-left: 20px; /* Adiciona um espaço à esquerda para separar a imagem */
-}
-
-.evento-card img {
-    max-width: 300px; /* Limita a largura da imagem */
-    border-radius: 5px;
-    margin-right: 20px; /* Adiciona um espaço à direita da imagem */
-    border: none; /* Remove a borda ao redor da imagem */
-}
-
-.inscricao-button {
-    margin-top: 20px;
-    margin-right: auto; /* Define a margem direita como "auto" para centralizar horizontalmente */
-    margin-left: auto; /* Define a margem esquerda como "auto" para centralizar horizontalmente */
+.visualizacao-logout-container {
+    margin-top: -50px;
+    margin-right: 50px;
+    margin-left: auto;
     font-size: 15px;
     border: none;
     border-radius: 10px;
@@ -45,8 +33,83 @@
     line-height: 1.2;
     text-transform: uppercase;
     display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 45px;
+    background: #6a7dfe;
+    background: -webkit-linear-gradient(to left, #21d4fd, #b721ff);
+    background: -o-linear-gradient(to left, #21d4fd, #b721ff);
+    background: -moz-linear-gradient(to left, #21d4fd, #b721ff);
+    background: linear-gradient(to left, #21d4fd, #b721ff);
+}
+
+.visualizacao-logout-button {
+    border-radius: 20px;
+    border: none;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 400;
+    font-family: inherit;
+    background-color: #00000000;
+    cursor: pointer;
+    transition: border-color 0.25s;
+    color: #fff;
+}
+
+.visualizacao-logo-img {
+    margin-left: -1650px;
+    margin-top: -120px; 
+    width: 200px;
+    height: 200px;  
+}
+
+.visualizacao-evento-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Alterado para centralizar verticalmente */
+    padding: 20px;
+}
+
+.visualizacao-evento-card {
+    display: flex;
+    align-items: flex-start;
+    margin-left: 20px;
+}
+
+.visualizacao-evento-imagem {
+    max-width: 900px;
+    border-radius: 5px;
+    margin-right: 100px;
+    border: none;
+}
+
+.visualizacao-evento-info {
+    font-size: 15px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Adicionado para centralizar verticalmente */
+    margin-left: 20px;
+    margin-top: auto; /* Para alinhar o texto no meio em relação à imagem */
+    margin-bottom: auto; /* Para alinhar o texto no meio em relação à imagem */
+}
+
+.visualizacao-evento-info span {
+    color: #a5ad73; /* Cor diferente para as palavras específicas */
+}
+
+.visualizacao-inscricao-button {
+    margin-top: 20px;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 150px;
     height: 40px;
     background: #6a7dfe;
@@ -56,3 +119,16 @@
     background: linear-gradient(to left, #21d4fd, #b721ff);
 }
 
+.visualizacao-erro-inscricao {
+    text-align: center;
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.visualizacao-sucesso-inscricao {
+    text-align: center;
+    color: green;
+    font-size: 14px;
+    margin-top: 10px;
+}

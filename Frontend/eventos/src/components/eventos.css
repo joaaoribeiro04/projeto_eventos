@@ -16,7 +16,7 @@
 }
 
 .evento-card {
-  width: 310px; /* largura fixa de cada card */
+  width: 310px;
   margin: 10px;
   padding: 10px;
   border: 1px solid #333;
@@ -24,31 +24,32 @@
   box-shadow: 0 2px 4px rgb(255, 255, 255);
   transition: transform 0.3s ease;
   display: flex;
-  flex-direction: column; /* para alinhar o conteúdo verticalmente */
+  flex-direction: column;
   background-color: #333;
-  overflow: hidden; /* Para evitar que o conteúdo ultrapasse a largura do card */
+  overflow: hidden;
 }
 
 .evento-card img {
   width: 100%;
-  height: auto;
+  height: 200px; /* Define uma altura fixa para as imagens */
+  object-fit: cover; /* Ajusta a imagem dentro da área definida */
   border-radius: 5px;
   margin-bottom: 10px;
 }
 
 .evento-card a {
-  color: inherit !important; /* Mantém a cor do texto herdada */
+  color: inherit !important;
   text-decoration: none !important;
   cursor: pointer;
 }
 
 .evento-card a:hover {
-  text-decoration: none !important; /* Remove o sublinhado quando hover */
+  text-decoration: none !important;
 }
 
 .inscricao-button {
-  margin-top: auto; /* Para alinhar o botão à parte inferior do card */
-  align-self: center; /* Para centralizar o botão horizontalmente */
+  margin-top: auto;
+  align-self: center;
   font-size: 15px;
   border: none;
   border-radius: 10px;
@@ -68,10 +69,10 @@
 }
 
 .evento-link {
-  color: inherit !important; /* Mantém a cor do texto herdada */
-  text-decoration: none !important; /* Remove qualquer decoração de texto */
+  color: inherit !important;
+  text-decoration: none !important;
 }
 
 .evento-link:hover {
-  text-decoration: none !important; /* Remove o sublinhado quando hover */
+  text-decoration: none !important;
 }

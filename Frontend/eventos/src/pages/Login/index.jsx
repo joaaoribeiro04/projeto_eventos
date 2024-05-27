@@ -7,8 +7,8 @@ import jpIMG from "../../assets/logo.png";
 export const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(""); // Estado para armazenar a mensagem de erro
     const navigate = useNavigate(); 
-    console.log("String");
 
     const handleLogin = async (event) => {
         event.preventDefault(); // Impede o comportamento padrão do formulário
@@ -21,10 +21,11 @@ export const Login = () => {
             });
             console.log(response.data);
             // Redireciona para a página principal após o login bem-sucedido
-            navigate("/", {replace : true});
+            navigate("/", { replace: true });
 
         } catch (error) {
             console.error("Erro ao fazer login:", error);
+            setError("Credenciais inválidas"); // Define a mensagem de erro no estado
         }
     };
 
@@ -33,7 +34,9 @@ export const Login = () => {
             <form className="login-form" onSubmit={handleLogin}>
                 <span className="login-form-title"> Bem vindo </span>
                 <span className="login-form-title">
-                    <img src={jpIMG} alt="logo" />
+                    <Link to="/">
+                        <img src={jpIMG} alt="logo" />
+                    </Link>
                 </span>
 
                 <div className="wrap-input">
@@ -67,6 +70,13 @@ export const Login = () => {
                     <Link className="txt2" to="/register">Criar conta.</Link>
                 </div>
             </form>
+
+            {/* Exibe a mensagem de erro se houver */}
+            {error && 
+                <div className="error-message-wrapper">
+                    <div className="error-message">{error}</div>
+                </div>
+            }
         </LayoutComponents>
     );
 };

@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import jpIMG from "../../assets/logo.png";
 import axios from 'axios';
-import "../../components/visualizacao.css";
+import "../../components/visualizacao.css"; // Certifique-se de que o caminho está correto
 
 function Visualizacao() {
     const { id } = useParams();
     const [evento, setEvento] = useState(null);
+    const [erroInscricao, setErroInscricao] = useState(""); // Estado para armazenar mensagem de erro de inscrição
+    const [sucessoInscricao, setSucessoInscricao] = useState(""); // Estado para armazenar mensagem de sucesso de inscrição
 
     const handleLogout = async () => {
         try {
@@ -38,14 +40,22 @@ function Visualizacao() {
         try {
             const response = await axios.post(`http://localhost:8000/api/Eventos/${id}/Inscricao`);
             console.log('Inscrição realizada com sucesso!');
+            setSucessoInscricao("Inscrição realizada com sucesso!");
+            setErroInscricao(""); // Limpa a mensagem de erro, se houver
         } catch (error) {
             console.error('Erro ao fazer inscrição:', error);
+            if (error.response && error.response.status === 401) {
+                setErroInscricao("Inscrição efetuada sem sucesso! É necessário login");
+            } else {
+                setErroInscricao("Inscrição efetuada sem sucesso!");
+            }
+            setSucessoInscricao(""); // Limpa a mensagem de sucesso
         }
     };
 
     return (
-        <div className="container-header">
-            <div className="input-container">
+        <div className="visualizacao-container-header">
+            <div className="visualizacao-input-container">
                 <Link to="/">
                     <button>HomePage</button>
                 </Link>
@@ -56,27 +66,29 @@ function Visualizacao() {
                     <button>Histórico</button>
                 </Link>
             </div>
-            <div className="logout-container">
+            <div className="visualizacao-logout-container">
                 <button
-                    className="logout-button"
+                    className="visualizacao-logout-button"
                     onClick={handleLogout}
                 >
                     LogOut
                 </button>
             </div>
-            <img className="logo-img" src={jpIMG} alt="logo" />
-            <div className="evento-container">
+            <img className="visualizacao-logo-img" src={jpIMG} alt="logo" />
+            <div className="visualizacao-evento-container">
                 {evento && (
-                    <div className="evento-card">
-                        <img src={`http://localhost:8000/${evento.imagem}`} alt="Imagem do Evento" />
-                        <div className="evento-info">
+                    <div className="visualizacao-evento-card">
+                        <img className="visualizacao-evento-imagem" src={`http://localhost:8000/${evento.imagem}`} alt="Imagem do Evento" />
+                        <div className="visualizacao-evento-info">
                             <h2>{evento.titulo}</h2>
-                            <p>Cidade: {evento.cidade}</p>
-                            <p>Data: {new Date(evento.data).toLocaleDateString()}</p>
-                            <p>Desporto: {evento.desporto}</p>
-                            <p>Descrição: {evento.descricao}</p>
+                            <p><span>Cidade:</span> {evento.cidade}</p>
+                            <p><span>Data:</span> {new Date(evento.data).toLocaleDateString()}</p>
+                            <p><span>Desporto:</span> {evento.desporto}</p>
+                            <p><span>Descrição:</span> {evento.descricao}</p>
+                            <button className="visualizacao-inscricao-button" onClick={handleInscricao}>Inscrever</button>
+                            {erroInscricao && <p className="visualizacao-erro-inscricao">{erroInscricao}</p>}
+                            {sucessoInscricao && <p className="visualizacao-sucesso-inscricao">{sucessoInscricao}</p>}
                         </div>
-                        <button className="inscricao-button" onClick={handleInscricao}>Inscrever</button>
                     </div>
                 )}
             </div>
