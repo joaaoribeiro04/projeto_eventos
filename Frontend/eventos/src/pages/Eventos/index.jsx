@@ -6,6 +6,9 @@ import "../../components/eventos.css";
 
 function Eventos() {
     const [eventos, setEventos] = useState([]);
+    const [filtroDesporto, setFiltroDesporto] = useState('');
+    const [filtroMes, setFiltroMes] = useState('');
+    const [eventosFiltrados, setEventosFiltrados] = useState([]); // Estado para armazenar os eventos filtrados
 
     useEffect(() => {
         async function fetchEventos() {
@@ -21,6 +24,31 @@ function Eventos() {
         fetchEventos();
     }, []);
 
+    useEffect(() => {
+        // Função para filtrar e ordenar os eventos quando o filtro de desporto ou mês é alterado
+        const filtrarEventos = () => {
+            let eventosFiltradosTemp = eventos;
+
+            if (filtroDesporto !== '') {
+                eventosFiltradosTemp = eventosFiltradosTemp.filter(evento => evento.desporto === filtroDesporto);
+            }
+
+            if (filtroMes !== '') {
+                const mesFiltro = parseInt(filtroMes, 10); // Converter o mês para número
+                eventosFiltradosTemp = eventosFiltradosTemp.filter(evento => {
+                    const eventoMes = new Date(evento.data).getMonth() + 1; // Obter o mês do evento
+                    return eventoMes === mesFiltro;
+                });
+            }
+
+            eventosFiltradosTemp.sort((a, b) => (a.titulo > b.titulo) ? 1 : -1); // Ordena os eventos por título
+
+            setEventosFiltrados(eventosFiltradosTemp);
+        };
+
+        filtrarEventos(); // Chama a função inicialmente e sempre que os filtros de desporto ou mês forem alterados
+    }, [filtroDesporto, filtroMes, eventos]); // Dependências: filtroDesporto, filtroMes e eventos
+
     const handleLogout = async () => {
         try {
             const response = await axios.post('http://localhost:8000/api/logout'); // Fazendo a solicitação POST usando Axios
@@ -34,6 +62,14 @@ function Eventos() {
         } catch (error) {
             console.error('Erro de rede:', error);
         }
+    };
+
+    const handleFiltroDesportoChange = (e) => {
+        setFiltroDesporto(e.target.value);
+    };
+
+    const handleFiltroMesChange = (e) => {
+        setFiltroMes(e.target.value);
     };
 
     return (
@@ -58,8 +94,32 @@ function Eventos() {
                 </button>
             </div>
             <img className="logo-img" src={jpIMG} alt="logo" />
+            <div className="filtro-container">
+                <select value={filtroDesporto} onChange={handleFiltroDesportoChange}>
+                    <option value="">Todos os desportos</option>
+                    <option value="Atletismo">Atletismo</option>
+                    <option value="BTT">BTT</option>
+                    <option value="Caminhada">Caminhada</option>
+                    <option value="Trail">Trail</option>
+                </select>
+                <select value={filtroMes} onChange={handleFiltroMesChange}>
+                    <option value="">Todos os meses</option>
+                    <option value="1">Janeiro</option>
+                    <option value="2">Fevereiro</option>
+                    <option value="3">Março</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Maio</option>
+                    <option value="6">Junho</option>
+                    <option value="7">Julho</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
+                </select>
+            </div>
             <div className="eventos-container">
-                {eventos.map(evento => (
+                {eventosFiltrados.map(evento => (
                     <Link key={evento.id} to={`/visualizacao/${evento.id}`} className="evento-link">
                         <div className="evento-card">
                             <img src={`http://localhost:8000/${evento.imagem}`} alt="Imagem do Evento" />
