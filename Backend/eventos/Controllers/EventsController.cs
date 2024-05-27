@@ -20,7 +20,23 @@ namespace eventos.Controllers
             _context = context;
             _hostingEnvironment = hostingEnvironment;
         }
-
+        
+        [HttpGet("historico")]
+        public IActionResult GetEventosHistoricos()
+        {
+            try
+            {
+                var eventosHistoricos = _context.Eventos
+                    .Where(e => DateTime.Compare(e.Data.ToLocalTime(), DateTime.Now) < 0)
+                    .ToList();
+                return Ok(eventosHistoricos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro interno do servidor: {ex.Message}");
+            }
+        } 
+        
         // POST: api/Eventos/UploadImagem
         [HttpPost("UploadImagem")]
         public async Task<IActionResult> UploadImagem([FromForm] IFormFile file)

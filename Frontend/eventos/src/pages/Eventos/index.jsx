@@ -9,6 +9,8 @@ function Eventos() {
     const [filtroDesporto, setFiltroDesporto] = useState('');
     const [filtroMes, setFiltroMes] = useState('');
     const [eventosFiltrados, setEventosFiltrados] = useState([]); // Estado para armazenar os eventos filtrados
+    const [currentPage, setCurrentPage] = useState(1);
+    const eventsPerPage = 15; // Número máximo de eventos por página
 
     useEffect(() => {
         async function fetchEventos() {
@@ -27,7 +29,7 @@ function Eventos() {
     useEffect(() => {
         // Função para filtrar e ordenar os eventos quando o filtro de desporto ou mês é alterado
         const filtrarEventos = () => {
-            let eventosFiltradosTemp = eventos;
+            let eventosFiltradosTemp = eventos.filter(evento => new Date(evento.data) > new Date());
 
             if (filtroDesporto !== '') {
                 eventosFiltradosTemp = eventosFiltradosTemp.filter(evento => evento.desporto === filtroDesporto);
@@ -71,6 +73,12 @@ function Eventos() {
     const handleFiltroMesChange = (e) => {
         setFiltroMes(e.target.value);
     };
+
+    const indexOfLastEvent = currentPage * eventsPerPage;
+    const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+    const currentEvents = eventosFiltrados.slice(indexOfFirstEvent, indexOfLastEvent);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <div className="container-header">
@@ -119,7 +127,7 @@ function Eventos() {
                 </select>
             </div>
             <div className="eventos-container">
-                {eventosFiltrados.map(evento => (
+                {currentEvents.map(evento => (
                     <Link key={evento.id} to={`/visualizacao/${evento.id}`} className="evento-link">
                         <div className="evento-card">
                             <img src={`http://localhost:8000/${evento.imagem}`} alt="Imagem do Evento" />
@@ -130,6 +138,14 @@ function Eventos() {
                         </div>
                     </Link>
                 ))}
+            </div>
+            <div className="pagination">
+                {currentPage > 1 && (
+                    <button onClick={() => paginate(currentPage - 1)}>Página anterior</button>
+                )}
+                {currentEvents.length === eventsPerPage && (
+                    <button onClick={() => paginate(currentPage + 1)}>Próxima página</button>
+                )}
             </div>
         </div>
     );

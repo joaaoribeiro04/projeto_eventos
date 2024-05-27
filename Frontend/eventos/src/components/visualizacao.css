@@ -78,7 +78,8 @@
 }
 
 .visualizacao-evento-imagem {
-    max-width: 900px;
+    width: 900px;
+    height: 650px;
     border-radius: 5px;
     margin-right: 100px;
     border: none;
