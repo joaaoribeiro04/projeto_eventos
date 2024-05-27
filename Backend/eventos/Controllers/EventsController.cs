@@ -82,7 +82,7 @@ namespace eventos.Controllers
             return CreatedAtAction(nameof(GetEventos), new { id = evento.Id }, evento);
         }
 
-        // PUT: api/Eventos/5
+// PUT: api/Eventos/5
         [HttpPut("{id}")] // Atualiza um evento com base no ID
         public async Task<IActionResult> PutEvento(int id, Evento evento)
         {
