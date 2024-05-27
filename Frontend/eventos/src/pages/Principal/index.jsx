@@ -109,7 +109,7 @@ function Principal() {
             <footer className="footer">
                 <hr className="mt-5 mb-4" />
                 <p className="text-muted">
-                    Página que permite visualizar e inscrever em vários eventos desportivos.
+                    Website para a gestão de eventos desportivos.
                 </p>
             </footer>
         </div>
