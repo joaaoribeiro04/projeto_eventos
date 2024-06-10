@@ -156,6 +156,24 @@ namespace eventos.Controllers
 
             return NoContent();
         }
+        
+        // GET: api/Eventos/Inscricoes/{userId}
+        [HttpGet("Inscricoes/{userId}")]
+        public async Task<ActionResult<IEnumerable<Evento>>> GetEventosInscritos(string userId)
+        {
+            // Buscar todas as inscrições do usuário específico
+            var inscricoes = await _context.Inscricoes
+                .Where(i => i.UsuarioId == userId)
+                .ToListAsync();
+
+            // Buscar os eventos correspondentes às inscrições encontradas
+            var eventoIds = inscricoes.Select(i => i.EventoId).ToList();
+            var eventosInscritos = await _context.Eventos
+                .Where(e => eventoIds.Contains(e.Id))
+                .ToListAsync();
+
+            return eventosInscritos;
+        }
 
         // POST: api/Eventos/{id}/Inscricao
         [HttpPost("{id}/Inscricao")]
