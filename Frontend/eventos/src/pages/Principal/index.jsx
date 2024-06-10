@@ -1,17 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from "react";
+import axios from 'axios';
+import jpIMG from "../../assets/logo.png";
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import axios from 'axios'; // Importando Axios
-import jpIMG from "../../assets/logo.png";
-import imagem1 from "../../assets/imagem1.jpg";
-import imagem2 from "../../assets/imagem2.jpg";
-import imagem3 from "../../assets/imagem3.jpg";
+
+function EventList() {
+    const [eventos, setEventos] = useState([]);
+
+    useEffect(() => {
+        async function fetchEventos() {
+            try {
+                const response = await axios.get('http://localhost:8000/api/Eventos/Inscricoes');
+                setEventos(response.data);
+            } catch (error) {
+                console.error('Erro ao buscar eventos:', error);
+            }
+        }
+
+        fetchEventos();
+    }, []);
+
+    return (
+        <div className="eventos-container">
+            <h2>Lista de Eventos</h2>
+            <ul>
+                {eventos.map(evento => (
+                    <li key={evento.id}>
+                        <Link to={`/visualizacao/${evento.id}`}>{evento.titulo}</Link>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+}
 
 function Principal() {
     const [selected, setSelected] = useState(null);
+    const [showList, setShowList] = useState(false);
 
     const handleButtonClick = (index) => {
         setSelected(index);
@@ -19,17 +46,19 @@ function Principal() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.post('http://localhost:8000/api/logout'); // Fazendo a solicitação POST usando Axios
+            const response = await axios.post('http://localhost:8000/api/logout');
             if (response.status === 200) {
-                // Se o logout for bem-sucedido, redireciona para a página inicial ou faz qualquer outra coisa necessária
                 window.location.href = '/login';
             } else {
-                // Tratar erro de logout, se necessário
                 console.error('Erro ao fazer logout');
             }
         } catch (error) {
             console.error('Erro de rede:', error);
         }
+    };
+
+    const handleShowList = () => {
+        setShowList(!showList); // Alternar entre mostrar e ocultar a lista
     };
 
     const settings = {
@@ -92,20 +121,29 @@ function Principal() {
                     </button>
                 </div>
                 <img className="logo-img" src={jpIMG} alt="logo" />
+                <Link to="/inscritos"> {/* Aqui está a adição para navegar para a página de eventos inscritos */}
+                    <button
+                        className="eventosinscritos-button"
+                        style={{ float: 'right' }}
+                    >
+                        Eventos Inscritos
+                    </button>
+                </Link>
             </div>
             <div className="carousel-container">
                 <Slider {...settings}>
                     <div>
-                        <img src={imagem2} alt="Imagem 2" style={imageStyle} />
+                        <img src={require("../../assets/imagem2.jpg")} alt="Imagem 2" style={imageStyle} />
                     </div>
                     <div>
-                        <img src={imagem1} alt="Imagem1 " style={imageStyle} />
+                        <img src={require("../../assets/imagem1.jpg")} alt="Imagem1 " style={imageStyle} />
                     </div>
                     <div>
-                        <img src={imagem3} alt="Imagem 3" style={imageStyle} />
+                        <img src={require("../../assets/imagem3.jpg")} alt="Imagem 3" style={imageStyle} />
                     </div>
                 </Slider>
             </div>
+            {showList && <EventList />}
             <footer className="footer">
                 <hr className="mt-5 mb-4" />
                 <p className="text-muted">
