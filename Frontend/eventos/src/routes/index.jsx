@@ -6,6 +6,7 @@ import Principal from '../pages/Principal';
 import Eventos from '../pages/Eventos';
 import Historico from '../pages/Historico';
 import Visualizacao from '../pages/Visualizacao';
+import Admin from '../pages/Admin';
 
 export const AppRouter = () => {
   return (
@@ -17,6 +18,7 @@ export const AppRouter = () => {
         <Route path="/eventos" element={<Eventos />} />
         <Route path="/historico" element={<Historico />} />
         <Route path="/visualizacao/:id" element={<Visualizacao />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </Router>
   );
