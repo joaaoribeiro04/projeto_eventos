@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System;
 
 namespace eventos.Controllers
 {
@@ -20,7 +22,7 @@ namespace eventos.Controllers
             _context = context;
             _httpContextAccessor = httpContextAccessor;
         }
-        
+
         [HttpGet("historico")]
         public IActionResult GetEventosHistoricos()
         {
@@ -36,7 +38,7 @@ namespace eventos.Controllers
                 return StatusCode(500, $"Erro interno do servidor: {ex.Message}");
             }
         } 
-        
+
         // POST: api/Eventos/UploadImagem
         [HttpPost("UploadImagem")]
         public async Task<IActionResult> UploadImagem([FromForm] IFormFile file)
@@ -65,6 +67,7 @@ namespace eventos.Controllers
                 return StatusCode(500, $"Erro interno do servidor: {ex.Message}");
             }
         }
+
         // GET: api/Eventos
         [HttpGet] // Retorna todos os eventos na base de dados
         public async Task<ActionResult<IEnumerable<Evento>>> GetEventos()
@@ -98,7 +101,7 @@ namespace eventos.Controllers
             return CreatedAtAction(nameof(GetEventos), new { id = evento.Id }, evento);
         }
 
-// PUT: api/Eventos/5
+        // PUT: api/Eventos/5
         [HttpPut("{id}")] // Atualiza um evento com base no ID
         public async Task<IActionResult> PutEvento(int id, Evento evento)
         {
@@ -156,7 +159,7 @@ namespace eventos.Controllers
 
             return NoContent();
         }
-        
+
         [HttpGet("Inscricoes")]
         public async Task<ActionResult<IEnumerable<Evento>>> GetEventosInscritos()
         {
@@ -236,6 +239,20 @@ namespace eventos.Controllers
             }
 
             return NoContent();
+        }
+
+        // Novo método para obter a contagem de inscritos num evento específico
+        [HttpGet("{id}/Inscritos")]
+        public async Task<ActionResult<int>> GetInscritos(int id)
+        {
+            var evento = await _context.Eventos.FindAsync(id);
+
+            if (evento == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(evento.Inscritos);
         }
 
         // Verifica se um evento com o ID fornecido existe no banco de dados

@@ -16,10 +16,13 @@ function AdminHistorico() {
     });
     const [eventos, setEventos] = useState([]);
     const [eventoToDeleteId, setEventoToDeleteId] = useState('');
+    const [eventoToCheckId, setEventoToCheckId] = useState('');
+    const [inscritosCount, setInscritosCount] = useState(null);
     const [insertSuccessMessage, setInsertSuccessMessage] = useState("");
     const [insertErrorMessage, setInsertErrorMessage] = useState("");
     const [deleteSuccessMessage, setDeleteSuccessMessage] = useState("");
     const [deleteErrorMessage, setDeleteErrorMessage] = useState("");
+    const [checkInscritosErrorMessage, setCheckInscritosErrorMessage] = useState("");
 
     useEffect(() => {
         fetchEventos();
@@ -122,6 +125,18 @@ function AdminHistorico() {
         }
     };
 
+    const handleCheckInscritos = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8000/api/Eventos/${eventoToCheckId}/Inscritos`);
+            setInscritosCount(response.data);
+            setCheckInscritosErrorMessage("");
+        } catch (error) {
+            setCheckInscritosErrorMessage("Erro ao verificar inscritos");
+            console.error('Erro ao verificar inscritos:', error);
+            setInscritosCount(null);
+        }
+    };
+
     return (
         <div className="container-header">
             <div className="input-container">
@@ -205,10 +220,24 @@ function AdminHistorico() {
                         {deleteErrorMessage && <p className="error-message">{deleteErrorMessage}</p>}
                     </div>
                 </div>
+                <div className="admin-form-container">
+                    <h3>Verificar inscritos</h3>
+                    <div>
+                        <input
+                            className="admin-input"
+                            type="text"
+                            placeholder="ID do evento a verificar"
+                            value={eventoToCheckId}
+                            onChange={(e) => setEventoToCheckId(e.target.value)}
+                        />
+                        <button className="admin-button" onClick={handleCheckInscritos}>Verificar Inscritos</button>
+                        {inscritosCount !== null && <p>Número de inscritos: {inscritosCount}</p>}
+                        {checkInscritosErrorMessage && <p className="error-message">{checkInscritosErrorMessage}</p>}
+                    </div>
+                </div>
             </div>
         </div>
     );
 }
 
 export default AdminHistorico;
-

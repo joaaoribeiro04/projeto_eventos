@@ -24,5 +24,6 @@ export const AppRouter = () => {
         <Route path="/inscritos" element={<EventosInscritosPage />} />
       </Routes>
     </Router>
+    
   );
 };
