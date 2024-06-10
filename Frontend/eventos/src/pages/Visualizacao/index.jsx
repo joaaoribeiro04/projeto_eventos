@@ -47,7 +47,7 @@ function Visualizacao() {
             if (error.response && error.response.status === 401) {
                 setErroInscricao("Inscrição efetuada sem sucesso! É necessário login");
             } else {
-                setErroInscricao("Inscrição efetuada sem sucesso!");
+                setErroInscricao("Já está inscrito neste evento!");
             }
             setSucessoInscricao(""); // Limpa a mensagem de sucesso
         }

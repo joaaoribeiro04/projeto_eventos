@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    place-items: flex-start;
+    min-width: 320px;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 10%;
+}
+
+.container-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    width: 100vw;
+    margin-top: 20px;
+}
+
+.input-container {
+    display: flex;
+    gap: 10px;
+}
+
+.logout-container {
+    margin-top: 10px;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    line-height: 1.2;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 45px;
+    background: #6a7dfe;
+    background: -webkit-linear-gradient(to left, #21d4fd, #b721ff);
+    background: -o-linear-gradient(to left, #21d4fd, #b721ff);
+    background: -moz-linear-gradient(to left, #21d4fd, #b721ff);
+    background: linear-gradient(to left, #21d4fd, #b721ff);
+}
+
+.logo-img {
+    margin: 20px;
+    width: 100px;
+}
+
+.admin-historico-container {
+    display: flex;
+    justify-content: center; /* Alteração para centralizar os formulários horizontalmente */
+    align-items: center; /* Ajuste para alinhar os formulários no topo */
+    padding: 2px;
+    width: 100vw;
+    margin-top: 20px;
+}
+
+
+.admin-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin-right: 20px; /* Adição para criar um espaço entre os formulários */
+}
+
+.admin-form {
+    width: 100%;
+}
+
+.admin-input {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.admin-button {
+    margin: 10px 0;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.admin-button:hover {
+    background-color: #0056b3;
+}
+
+.success-message {
+    color: green;
+}
+
+.error-message {
+    color: red;
+}

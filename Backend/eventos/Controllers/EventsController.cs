@@ -175,6 +175,13 @@ namespace eventos.Controllers
                 return Unauthorized(new { message = "Usuário não autenticado." });
             }
 
+            // Verificar se o usuário já está inscrito neste evento
+            var inscricaoExistente = _context.Inscricoes.Any(i => i.EventoId == id && i.UsuarioId == userId);
+            if (inscricaoExistente)
+            {
+                return BadRequest(new { message = "Usuário já está inscrito neste evento." });
+            }
+
             evento.Inscritos++; // Aumenta o número de inscritos
             _context.Entry(evento).State = EntityState.Modified;
 
