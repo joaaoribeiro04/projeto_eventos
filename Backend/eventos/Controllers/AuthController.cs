@@ -37,17 +37,21 @@ namespace eventos.Controllers
         {
             var user = _repository.GetByEmail(dto.Email);
 
-            if (user == null) return BadRequest(new { message = "Credenciais inválidas" });
+            if (user == null) return BadRequest(new { message = "Invalid credentials" });
 
             if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password))
             {
-                return BadRequest(new { message = "Credenciais inválidas" });
+                return BadRequest(new { message = "Invalid credentials" });
             }
+
+            // Verificar se o email contém o sufixo para identificar os promotores
+            bool isPromoter = dto.Email.EndsWith("@promotor.com");
 
             // Define o ID do usuário na sessão após o login bem-sucedido
             _httpContextAccessor.HttpContext.Session.SetString("UserId", user.Id.ToString());
 
-            return Ok(user);
+            // Retornar informações sobre o tipo de usuário na resposta
+            return Ok(new { userType = isPromoter ? "promoter" : "user" });
         }
 
         [HttpPost("logout")]
