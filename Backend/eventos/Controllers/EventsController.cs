@@ -13,12 +13,12 @@ namespace eventos.Controllers
     public class EventosController : ControllerBase
     {
         private readonly EventContext _context;
-        private readonly IWebHostEnvironment _hostingEnvironment;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EventosController(EventContext context, IWebHostEnvironment hostingEnvironment)
+        public EventosController(EventContext context, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
-            _hostingEnvironment = hostingEnvironment;
+            _httpContextAccessor = httpContextAccessor;
         }
         
         [HttpGet("historico")]
@@ -157,16 +157,23 @@ namespace eventos.Controllers
             return NoContent();
         }
         
-        // GET: api/Eventos/Inscricoes/{userId}
-        [HttpGet("Inscricoes/{userId}")]
-        public async Task<ActionResult<IEnumerable<Evento>>> GetEventosInscritos(string userId)
+        [HttpGet("Inscricoes")]
+        public async Task<ActionResult<IEnumerable<Evento>>> GetEventosInscritos()
         {
-            // Buscar todas as inscrições do usuário específico
+            // Obtém o userId da sessão
+            var userId = _httpContextAccessor.HttpContext.Session.GetString("UserId");
+
+            if (userId == null)
+            {
+                return BadRequest(new { message = "Usuário não autenticado." });
+            }
+
+            // Busca todas as inscrições do usuário específico
             var inscricoes = await _context.Inscricoes
                 .Where(i => i.UsuarioId == userId)
                 .ToListAsync();
 
-            // Buscar os eventos correspondentes às inscrições encontradas
+            // Busca os eventos correspondentes às inscrições encontradas
             var eventoIds = inscricoes.Select(i => i.EventoId).ToList();
             var eventosInscritos = await _context.Eventos
                 .Where(e => eventoIds.Contains(e.Id))

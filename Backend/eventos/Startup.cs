@@ -30,6 +30,7 @@ namespace eventos
             });
 
             // Outros serviços
+            services.AddHttpContextAccessor();
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddCors();
