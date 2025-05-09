@@ -15,13 +15,10 @@ function AdminHistorico() {
         desporto: ''
     });
     const [eventos, setEventos] = useState([]);
-    const [eventoToDeleteId, setEventoToDeleteId] = useState('');
     const [eventoToCheckId, setEventoToCheckId] = useState('');
     const [inscritosCount, setInscritosCount] = useState(null);
     const [insertSuccessMessage, setInsertSuccessMessage] = useState("");
     const [insertErrorMessage, setInsertErrorMessage] = useState("");
-    const [deleteSuccessMessage, setDeleteSuccessMessage] = useState("");
-    const [deleteErrorMessage, setDeleteErrorMessage] = useState("");
     const [checkInscritosErrorMessage, setCheckInscritosErrorMessage] = useState("");
 
     useEffect(() => {
@@ -99,32 +96,6 @@ function AdminHistorico() {
         }
     };
 
-    const handleDeleteEvento = async () => {
-        try {
-            const response = await axios.delete(`http://localhost:8000/api/Eventos/${eventoToDeleteId}`);
-            if (response.status === 204) {
-                setDeleteSuccessMessage("Evento excluído com sucesso!");
-                console.log('Evento deleted successfully');
-                fetchEventos(); // Atualiza a lista de eventos após a exclusão
-                setTimeout(() => {
-                    setDeleteSuccessMessage("");
-                }, 3000); // Limpar mensagem de sucesso após 3 segundos
-            } else {
-                setDeleteErrorMessage("Erro ao excluir evento");
-                console.error('Erro ao excluir evento');
-                setTimeout(() => {
-                    setDeleteErrorMessage("");
-                }, 3000); // Limpar mensagem de erro após 3 segundos
-            }
-        } catch (error) {
-            setDeleteErrorMessage("Erro ao excluir evento");
-            console.error('Erro ao excluir evento:', error);
-            setTimeout(() => {
-                setDeleteErrorMessage("");
-            }, 3000); // Limpar mensagem de erro após 3 segundos
-        }
-    };
-
     const handleCheckInscritos = async () => {
         try {
             const response = await axios.get(`http://localhost:8000/api/Eventos/${eventoToCheckId}/Inscritos`);
@@ -137,10 +108,14 @@ function AdminHistorico() {
         }
     };
 
+    const handleEventosAdmin = () => {
+        window.location.href = '/eventosadmin';
+    };
+
     return (
         <div className="container-header">
             <div className="input-container">
-                <button>Eventos Desportivos</button>
+                <button onClick={handleEventosAdmin}>Eventos Desportivos</button>
             </div>
             <div className="logout-container">
                 <button className="logout-button" onClick={handleLogout}>LogOut</button>
@@ -204,21 +179,6 @@ function AdminHistorico() {
                         {insertSuccessMessage && <p className="success-message">{insertSuccessMessage}</p>}
                         {insertErrorMessage && <p className="error-message">{insertErrorMessage}</p>}
                     </form>
-                </div>
-                <div className="admin-form-container">
-                    <h3>Excluir evento</h3>
-                    <div>
-                        <input
-                            className="admin-input"
-                            type="text"
-                            placeholder="ID do evento a excluir"
-                            value={eventoToDeleteId}
-                            onChange={(e) => setEventoToDeleteId(e.target.value)}
-                        />
-                        <button className="admin-button" onClick={handleDeleteEvento}>Excluir Evento</button>
-                        {deleteSuccessMessage && <p className="success-message">{deleteSuccessMessage}</p>}
-                        {deleteErrorMessage && <p className="error-message">{deleteErrorMessage}</p>}
-                    </div>
                 </div>
                 <div className="admin-form-container">
                     <h3>Verificar inscritos</h3>

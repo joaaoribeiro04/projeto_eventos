@@ -8,7 +8,7 @@ export const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
-    const navigate = useNavigate(); // Use o hook useNavigate
+    const navigate = useNavigate(); 
 
     const handleRegister = async (event) => {
         event.preventDefault(); // Impede o comportamento padrão do formulário

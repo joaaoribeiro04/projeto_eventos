@@ -43,6 +43,13 @@ namespace eventos.Controllers
         [HttpPost("UploadImagem")]
         public async Task<IActionResult> UploadImagem([FromForm] IFormFile file)
         {
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                // Se o ID do usuário não estiver na sessão, significa que o usuário não está autenticado
+                return Unauthorized(new { message = "Usuário não autenticado." });
+            }
+            
             if (file == null || file.Length == 0)
                 return BadRequest("Nenhum arquivo enviado.");
 
@@ -92,6 +99,13 @@ namespace eventos.Controllers
         [HttpPost] // Cria um novo evento
         public async Task<ActionResult<Evento>> PostEvento(Evento evento)
         {
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                // Se o ID do usuário não estiver na sessão, significa que o usuário não está autenticado
+                return Unauthorized(new { message = "Utilizador não autenticado." });
+            }
+            
             // Ajuste a propriedade 'Data' para ter o fuso horário UTC
             evento.Data = evento.Data.ToUniversalTime();
 
@@ -100,48 +114,39 @@ namespace eventos.Controllers
 
             return CreatedAtAction(nameof(GetEventos), new { id = evento.Id }, evento);
         }
+        
+        
 
-        // PUT: api/Eventos/5
-        [HttpPut("{id}")] // Atualiza um evento com base no ID
+        // PUT: api/Eventos/{id} - Editar um evento existente
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutEvento(int id, Evento evento)
         {
-            if (id != evento.Id)
+            // Verificar se o evento com o ID fornecido existe
+            var eventoExistente = await _context.Eventos.FindAsync(id);
+            if (eventoExistente == null)
             {
-                return BadRequest();
+                return NotFound(new { message = "Evento não encontrado." });
             }
 
-            var existingEvento = await _context.Eventos.FindAsync(id);
+            // Ajustar a propriedade 'Data' para ter o fuso horário UTC, se necessário
+            evento.Data = evento.Data.ToUniversalTime();
 
-            if (existingEvento == null)
-            {
-                return NotFound();
-            }
+            // Atualizar apenas os campos permitidos
+            eventoExistente.Titulo = evento.Titulo ?? eventoExistente.Titulo;
+            eventoExistente.Cidade = evento.Cidade ?? eventoExistente.Cidade;
+            eventoExistente.Data = evento.Data != default ? evento.Data : eventoExistente.Data;
+            eventoExistente.Desporto = evento.Desporto ?? eventoExistente.Desporto;
 
-            // Atualize os campos do evento existente com os novos valores
-            existingEvento.Titulo = evento.Titulo;
-            existingEvento.Imagem = evento.Imagem;
-            existingEvento.Cidade = evento.Cidade;
-            existingEvento.Data = evento.Data;
-            existingEvento.Desporto = evento.Desporto;
-            existingEvento.Descricao = evento.Descricao;
-
+            // Salvar as alterações no banco de dados
             try
             {
                 await _context.SaveChangesAsync();
+                return Ok(eventoExistente);  // Retorna o evento atualizado
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception ex)
             {
-                if (!EventoExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return StatusCode(500, new { message = "Erro ao atualizar evento", error = ex.Message });
             }
-
-            return NoContent();
         }
 
         // DELETE: api/Eventos/5
@@ -168,7 +173,7 @@ namespace eventos.Controllers
 
             if (userId == null)
             {
-                return BadRequest(new { message = "Usuário não autenticado." });
+                return BadRequest(new { message = "Utilizador não autenticado." });
             }
 
             // Busca todas as inscrições do usuário específico
@@ -200,14 +205,14 @@ namespace eventos.Controllers
             if (userId == null)
             {
                 // Se o ID do usuário não estiver na sessão, significa que o usuário não está autenticado
-                return Unauthorized(new { message = "Usuário não autenticado." });
+                return Unauthorized(new { message = "Utilizador não autenticado." });
             }
 
             // Verificar se o usuário já está inscrito neste evento
             var inscricaoExistente = _context.Inscricoes.Any(i => i.EventoId == id && i.UsuarioId == userId);
             if (inscricaoExistente)
             {
-                return BadRequest(new { message = "Usuário já está inscrito neste evento." });
+                return BadRequest(new { message = "Utilizador já está inscrito neste evento." });
             }
 
             evento.Inscritos++; // Aumenta o número de inscritos
@@ -245,6 +250,13 @@ namespace eventos.Controllers
         [HttpGet("{id}/Inscritos")]
         public async Task<ActionResult<int>> GetInscritos(int id)
         {
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                // Se o ID do usuário não estiver na sessão, significa que o usuário não está autenticado
+                return Unauthorized(new { message = "Utilizador não autenticado." });
+            }
+            
             var evento = await _context.Eventos.FindAsync(id);
 
             if (evento == null)

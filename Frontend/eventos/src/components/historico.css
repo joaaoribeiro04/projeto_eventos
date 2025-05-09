@@ -117,3 +117,17 @@ header {
 .error-message {
     color: red;
 }
+
+.delete-icon {
+    position: absolute; /* Posiciona a cruz no canto superior direito */
+    top: 10px; /* Distância do topo */
+    right: 10px; /* Distância da direita */
+    font-size: 24px;
+    color: red;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.delete-icon:hover {
+    color: darkred;
+}

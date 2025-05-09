@@ -16,6 +16,7 @@
 }
 
 .evento-card {
+  position: relative;
   width: 310px;
   margin: 10px;
   padding: 10px;

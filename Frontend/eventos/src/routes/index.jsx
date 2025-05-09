@@ -8,6 +8,7 @@ import Historico from '../pages/Historico';
 import Visualizacao from '../pages/Visualizacao';
 import Admin from '../pages/Admin';
 import EventosInscritosPage from '../pages/Inscritos';
+import EventosAdmin from '../pages/EventosAdmin';
 
 
 export const AppRouter = () => {
@@ -22,6 +23,7 @@ export const AppRouter = () => {
         <Route path="/visualizacao/:id" element={<Visualizacao />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/inscritos" element={<EventosInscritosPage />} />
+        <Route path="/eventosadmin" element={<EventosAdmin />} />
       </Routes>
     </Router>
     

@@ -68,12 +68,6 @@ function EventosInscritosPage() {
                     ))}
                 </div>
             </div>
-            <footer className="footer">
-                <hr className="mt-5 mb-4" />
-                <p className="text-muted">
-                    Website para a gestão de eventos desportivos.
-                </p>
-            </footer>
         </div>
     );
 }
